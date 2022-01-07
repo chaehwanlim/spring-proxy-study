@@ -19,7 +19,7 @@ public class OrderControllerV3 {
         return "ok";
     }
 
-    @GetMapping("/v3/request")
+    @GetMapping("/v3/no-log")
     public String noLog() {
         return "ok";
     }
