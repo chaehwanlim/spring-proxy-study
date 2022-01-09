@@ -70,7 +70,7 @@ public class BeanPostProcessorTest {
             log.info("beanName={}, bean={}", beanName, bean);
 
             // beanName이 "beanA"이지만 B가 반환됨
-           if (bean instanceof A) {
+            if (bean instanceof A) {
                 return new B();
             }
 
@@ -78,4 +78,5 @@ public class BeanPostProcessorTest {
         }
 
     }
+
 }

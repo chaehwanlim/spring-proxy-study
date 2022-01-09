@@ -1,29 +1,29 @@
-package hello.proxy.config.v2dynamicproxy.handler;
+package hello.proxy.config.proxyfactory.advice;
 
 import hello.proxy.trace.TraceStatus;
 import hello.proxy.trace.logtrace.LogTrace;
 import lombok.RequiredArgsConstructor;
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 @RequiredArgsConstructor
-public class LogTraceBasicHandler implements InvocationHandler {
-
-    private final Object target;
+public class LogTraceAdvice implements MethodInterceptor {
 
     private final LogTrace logTrace;
 
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+    public Object invoke(MethodInvocation invocation) throws Throwable {
         TraceStatus status = null;
 
         try {
+            Method method = invocation.getMethod();
             String message = method.getDeclaringClass().getSimpleName() + "." + method.getName() + "()";
             status = logTrace.begin(message);
 
             // target 호출
-            Object result = method.invoke(target, args);
+            Object result = invocation.proceed();
 
             logTrace.end(status);
 
