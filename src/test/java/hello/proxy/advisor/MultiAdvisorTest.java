@@ -15,7 +15,7 @@ public class MultiAdvisorTest {
 
     @Test
     @DisplayName("여러 프록시 적용")
-    void multiAdvisorTest() {
+    void multiProxyTest() {
         // client -> proxy2(advisor2) -> proxy1(advisor1) -> target
 
         ServiceInterface target = new ServiceImpl();
@@ -36,6 +36,26 @@ public class MultiAdvisorTest {
 
         proxy2.save();
         proxy2.find();
+    }
+
+    @Test
+    @DisplayName("하나의 프록시, 여러 어드바이저 적용")
+    void multiAdvisorTest() {
+        // client -> proxy -> advisor2 -> advisor1 -> target
+
+        DefaultPointcutAdvisor advisor1 = new DefaultPointcutAdvisor(Pointcut.TRUE, new Advice1());
+        DefaultPointcutAdvisor advisor2 = new DefaultPointcutAdvisor(Pointcut.TRUE, new Advice2());
+
+        ServiceInterface target = new ServiceImpl();
+        ProxyFactory proxyFactory = new ProxyFactory(target);
+        proxyFactory.addAdvisor(advisor1);
+        proxyFactory.addAdvisor(advisor2);
+
+        ServiceInterface proxy = (ServiceInterface) proxyFactory.getProxy();
+
+        // 실행
+        proxy.save();
+        proxy.find();
     }
 
     @Slf4j
