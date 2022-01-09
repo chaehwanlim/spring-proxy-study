@@ -1,6 +1,6 @@
 package hello.proxy;
 
-import hello.proxy.config.v3proxyfactory.ProxyFactoryConfigV1;
+import hello.proxy.config.v3proxyfactory.ProxyFactoryConfigV2;
 import hello.proxy.trace.logtrace.LogTrace;
 import hello.proxy.trace.logtrace.ThreadLocalLogTrace;
 import org.springframework.boot.SpringApplication;
@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
-@Import(ProxyFactoryConfigV1.class)
+@Import(ProxyFactoryConfigV2.class)
 // V1, V2, V3 바꿔가면서 적용해볼 거라서 임시로 컴포넌트 스캔 대상을 한정지음
 @SpringBootApplication(scanBasePackages = "hello.proxy.app")
 public class ProxyApplication {
